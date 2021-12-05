@@ -7,40 +7,41 @@ from shortcuts import action_list, link_list
 from abbreviations import add_all_abbreviations
 
 
-def check_if_abbreviation(some_key):
+def check_special_case(some_key):
     if some_key == 'shift':  # user wants an abbreviation
         wait('space')  # space is an abbreviation call
         sleep(0.2)  # without delay quits before filling the abbreviation
+        quit()
+    elif some_key == 'space':  # user wants to quit
         quit()
 
 
 add_all_abbreviations()  # keyboard.add_abbreviation() for all emails from abbreviations.py
 
 key_1 = read_key(suppress=True)
-sleep(0.15)  # keys can be read twice if held down
-check_if_abbreviation(key_1)
-key_2 = read_key(suppress=True)
-check_if_abbreviation(key_2)
-sleep(0.15)  # suppress=True fails on key release if there's no sleep()
-shortcut = key_1 + key_2
+check_special_case(key_1)
 
-if shortcut in action_list:
-    if action_list[shortcut] == 'Lock':
-        sleep(0.5)
-        windll.user32.LockWorkStation()  # lock pc
+while True:
+    key_2 = read_key(suppress=True)
+    check_special_case(key_2)
+    shortcut = key_1 + key_2
+    if shortcut in action_list:
+        command = action_list[shortcut]
+        if command == 'Lock':
+            sleep(0.5)
+            windll.user32.LockWorkStation()  # lock pc
+            quit()
+        elif command == 'Screenshot':
+            press_and_release('win+shift+s')  # make a screenshot
+        elif command == 'Sleep':
+            sleep(0.5)
+            system('rundll32.exe powrprof.dll,SetSuspendState 0,1,0')  # put pc to sleep
+            quit()
+    if shortcut in link_list:
+        name_exe = link_list[shortcut]
+        link_exe = path.dirname(__file__) + '\\links\\' + name_exe
+        try:
+            startfile(link_exe)
+        except FileNotFoundError:
+            pass
         quit()
-    elif action_list[shortcut] == 'Screenshot':
-        press_and_release('win+shift+s')  # make a screenshot
-    elif action_list[shortcut] == 'Sleep':
-        sleep(0.5)
-        system('rundll32.exe powrprof.dll,SetSuspendState 0,1,0')  # put pc to sleep
-        quit()
-
-if shortcut in link_list:
-    link_exe = path.dirname(__file__) + '\\links\\' + link_list[shortcut]
-    try:
-        startfile(link_exe)
-    except FileNotFoundError:
-        quit()
-
-quit()
