@@ -1,4 +1,4 @@
-from keyboard import read_key, press_and_release
+from keyboard import read_key, press_and_release, wait
 from os import system, startfile, path
 from time import sleep
 from ctypes import windll
@@ -8,8 +8,9 @@ from abbreviations import add_all_abbreviations
 
 
 def check_if_abbreviation(some_key):
-    if some_key == 'shift':
-        sleep(5)  # give user some time to type the abbreviation
+    if some_key == 'shift':  # user wants an abbreviation
+        wait('space')  # space is an abbreviation call
+        sleep(0.2)  # without delay quits before filling the abbreviation
         quit()
 
 
