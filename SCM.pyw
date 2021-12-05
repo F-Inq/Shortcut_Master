@@ -24,7 +24,7 @@ check_special_case(key_1)
 while True:
     key_2 = read_key(suppress=True)
     check_special_case(key_2)
-    shortcut = key_1 + key_2
+    shortcut = (key_1 + key_2).lower()
     if shortcut in action_list:
         command = action_list[shortcut]
         if command == 'Lock':
