@@ -33,6 +33,7 @@ while True:
             quit()
         elif command == 'Screenshot':
             press_and_release('win+shift+s')  # make a screenshot
+            quit()
         elif command == 'Sleep':
             sleep(0.5)
             system('rundll32.exe powrprof.dll,SetSuspendState 0,1,0')  # put pc to sleep
