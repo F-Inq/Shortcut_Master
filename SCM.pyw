@@ -33,6 +33,8 @@ while True:
             quit()
         elif command == 'Screenshot':
             press_and_release('win+shift+s')  # make a screenshot
+            key_3 = read_key()  # wait until user makes the screenshot before killing the usually bugged screenshot exe
+            system('taskkill /IM "ScreenClippingHost.exe" /F')  # kill screenshot exe if it bugged for some reason
             quit()
         elif command == 'Sleep':
             sleep(0.5)
