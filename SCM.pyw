@@ -34,8 +34,11 @@ while True:
         elif command == 'Screenshot':
             press_and_release('win+shift+s')  # make a screenshot
             key_3 = read_key()  # wait until user makes the screenshot before killing the usually bugged screenshot exe
-            system('taskkill /IM "ScreenClippingHost.exe" /F')  # kill screenshot exe if it bugged for some reason
-            quit()
+            if key_3:
+                if key_3 == 'ctrl':
+                    sleep(1.5)
+                system('taskkill /IM "ScreenClippingHost.exe" /F')  # kill screenshot exe if it bugged for some reason
+                quit()
         elif command == 'Sleep':
             sleep(0.5)
             system('rundll32.exe powrprof.dll,SetSuspendState 0,1,0')  # put pc to sleep
