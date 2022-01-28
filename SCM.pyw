@@ -12,7 +12,7 @@ def check_special_case(some_key):
         wait('space')  # space is an abbreviation call
         sleep(0.2)  # without delay quits before filling the abbreviation
         quit()
-    elif some_key == 'space':  # user wants to quit
+    elif some_key == 'space' or some_key == 'esc':  # user wants to quit
         quit()
 
 
